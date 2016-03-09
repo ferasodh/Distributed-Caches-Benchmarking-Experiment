@@ -1,0 +1,2 @@
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit"
+"com.performance.hazelcast.HazelcastBenchmark.getPerformanceTest","thrpt",1,20,7608.164523,664.017578,"ops/s"
