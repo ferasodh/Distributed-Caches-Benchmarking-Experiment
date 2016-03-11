@@ -43,6 +43,10 @@ public class HazelcastBenchmark {
 		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
 		
 		remoteMap = hzClient.getMap("employees");
+		
+		
+		
+		
 	}
 	
 	@TearDown(Level.Trial)
