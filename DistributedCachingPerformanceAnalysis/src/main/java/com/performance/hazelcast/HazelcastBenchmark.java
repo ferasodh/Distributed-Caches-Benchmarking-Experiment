@@ -30,7 +30,7 @@ import com.performance.model.Employee;
 @OperationsPerInvocation(HazelcastBenchmark.OPERATIONS_PER_INVOCATION)
 public class HazelcastBenchmark {
 	
-	public static final int OPERATIONS_PER_INVOCATION = 5000; 
+	public static final int OPERATIONS_PER_INVOCATION = 50000; 
 	private HazelcastInstance hzClient;
 	private IMap<Integer, Employee> remoteMap;
 	
@@ -58,10 +58,13 @@ public class HazelcastBenchmark {
     	Random random = new Random();
     	
     	for (int i = 0; i < OPERATIONS_PER_INVOCATION; i++) {
-			int x = random.nextInt(OPERATIONS_PER_INVOCATION);
+			int x = random.nextInt(remoteMap.size());
 			Employee emp = remoteMap.get(x);
 			
 			blackhole.consume(emp);
 		}	
     }
+    
+    
+    
 }
