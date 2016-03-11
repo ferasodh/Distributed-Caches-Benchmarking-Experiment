@@ -44,11 +44,7 @@ public class HazelcastBenchmark {
 		
 		remoteMap = hzClient.getMap("employees");
 		
-		
-		
 		// Line
-		
-		
 		
 	}
 	
