@@ -25,7 +25,7 @@ import static org.yardstickframework.BenchmarkUtils.println;
 public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
 	
 	// These our special args 
-	private final EchoBenchmarkArguments args = new EchoBenchmarkArguments();
+	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 	
 	private HazelcastInstance hzClient;
 	private IMap<Integer, Employee> remoteMap;
@@ -63,23 +63,18 @@ public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
 
 	@Override
 	public boolean test(Map<Object, Object> ctx) throws Exception {
-		
 		println("I'm the test");
-		
 		println(args.toString());
 		
     	Random random = new Random();
     	Employee emp = null;
-    	for (int i = 0; i < 300; i++) {
-			int x = random.nextInt(remoteMap.size());
-			emp = remoteMap.get(x);
-			
-			if(emp.getAge().equals("aa")) {
-				System.out.println("Will never happen!!!!");
-			}
-			
-			//blackhole.consume(emp);
-		}	
+		int x = random.nextInt(remoteMap.size());
+		
+		emp = remoteMap.get(x);
+		
+		if(emp.getAge().equals("aa")) {
+			System.out.println("Will never happen!!!!");
+		}
 		
 		println("I finished with emp = " + emp);
 		

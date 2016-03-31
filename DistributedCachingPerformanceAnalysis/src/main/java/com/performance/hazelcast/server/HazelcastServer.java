@@ -12,6 +12,7 @@ import org.yardstickframework.examples.echo.EchoBenchmarkArguments;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.performance.hazelcast.HazelcastBenchmarkArguments;
 import com.performance.model.Employee;
 
 /**
@@ -22,7 +23,7 @@ import com.performance.model.Employee;
 public class HazelcastServer implements BenchmarkServer {
 	
 	// These our special args 
-	private final EchoBenchmarkArguments args = new EchoBenchmarkArguments();
+	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 
 	@Override
 	public void start(BenchmarkConfiguration cfg) throws Exception {
