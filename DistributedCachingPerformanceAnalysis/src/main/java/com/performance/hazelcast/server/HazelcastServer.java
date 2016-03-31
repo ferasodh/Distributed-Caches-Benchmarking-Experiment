@@ -1,4 +1,4 @@
-package com.performance.hazelcast;
+package com.performance.hazelcast.server;
 
 import static org.yardstickframework.BenchmarkUtils.println;
 
