@@ -7,6 +7,12 @@
     <artifactId>distributed</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <properties>
+        <ignite.version>1.5.0.final</ignite.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javac.target>1.8</javac.target>
+        <yardstick.version>RELEASE</yardstick.version>
+    </properties>
     <name>Performance Analysis</name>
 
     <prerequisites>
@@ -48,13 +54,46 @@
             <artifactId>yardstick</artifactId>
             <version>${yardstick.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-core</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-spring</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-aws</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-indexing</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.32</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+
     </dependencies>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javac.target>1.8</javac.target>
-        <yardstick.version>RELEASE</yardstick.version>
-    </properties>
+
 
     <build>
         <plugins>
