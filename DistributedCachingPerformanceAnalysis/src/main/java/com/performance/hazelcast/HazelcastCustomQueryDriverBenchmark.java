@@ -68,9 +68,9 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 		println("Args:" + args.toString());
 		
     	Random random = new Random();
-		int x = random.nextInt(GeneralArguments.agesBound);
+		int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
-		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + x));
+		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + randomAge));
 		
 		println("I finished with employees of size = " + employees.size());
 		return true;
