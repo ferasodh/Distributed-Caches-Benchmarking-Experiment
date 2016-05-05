@@ -14,7 +14,7 @@ public class dataAPI {
     public Organization [] organizations = new Organization[10];
     public dataAPI(){
         try {
-            CSVReader reader = new CSVReader(new FileReader("Organizations.csv"));
+            CSVReader reader = new CSVReader(new FileReader("src/main/resources/Organizations.csv"));
             String [] nextLine;
             nextLine = reader.readNext();
             for(int i=0;i<10;i++){
@@ -27,7 +27,7 @@ public class dataAPI {
             }
             reader.close();
 
-            reader = new CSVReader(new FileReader("Users.csv"));
+            reader = new CSVReader(new FileReader("src/main/resources/Users.csv"));
             nextLine = reader.readNext();
             for(int j=0;j<7944;j++){
                 nextLine = reader.readNext();
