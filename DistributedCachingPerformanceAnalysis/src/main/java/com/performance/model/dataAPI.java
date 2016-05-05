@@ -36,7 +36,7 @@ public class dataAPI {
                 employees[j].setID(Integer.valueOf(nextLine[0]));
                 employees[j].setName(nextLine[1]);
                 employees[j].setPassword(nextLine[2]);
-                employees[j].setAge(nextLine[3]);
+                employees[j].setAge(Integer.valueOf(nextLine[3]));
                 employees[j].setOrganization(organizations[Integer.valueOf(nextLine[4])-1]);
             }
             reader.close();
