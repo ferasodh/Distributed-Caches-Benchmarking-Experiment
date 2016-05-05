@@ -2,6 +2,7 @@ package com.performance.model;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,9 +13,11 @@ public class dataAPI {
 
     public Employee [] employees = new Employee[7944];
     public Organization [] organizations = new Organization[10];
+    ClassLoader classLoader = getClass().getClassLoader();
+
     public dataAPI(){
         try {
-            CSVReader reader = new CSVReader(new FileReader("Organizations.csv"));
+            CSVReader reader = new CSVReader(new FileReader(new File("src/main/resources/data/Organizations.csv").getAbsolutePath()));
             String [] nextLine;
             nextLine = reader.readNext();
             for(int i=0;i<10;i++){
@@ -27,7 +30,7 @@ public class dataAPI {
             }
             reader.close();
 
-            reader = new CSVReader(new FileReader("Users.csv"));
+            reader = new CSVReader(new FileReader(new File("src/main/resources/data/Users.csv").getAbsolutePath()));
             nextLine = reader.readNext();
             for(int j=0;j<7944;j++){
                 nextLine = reader.readNext();
