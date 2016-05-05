@@ -5,10 +5,8 @@ import java.util.Map;
 import java.util.Random;
 
 import org.yardstickframework.BenchmarkConfiguration;
-import org.yardstickframework.BenchmarkDriver;
 import org.yardstickframework.BenchmarkDriverAdapter;
 import org.yardstickframework.BenchmarkUtils;
-import org.yardstickframework.examples.echo.EchoBenchmarkArguments;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;

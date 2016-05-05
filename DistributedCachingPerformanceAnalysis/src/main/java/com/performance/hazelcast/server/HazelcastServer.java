@@ -7,7 +7,6 @@ import java.util.Map;
 import org.yardstickframework.BenchmarkConfiguration;
 import org.yardstickframework.BenchmarkServer;
 import org.yardstickframework.BenchmarkUtils;
-import org.yardstickframework.examples.echo.EchoBenchmarkArguments;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionPolicy;
