@@ -17,10 +17,11 @@
 
 package com.performance.ignite.server;
 
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCheckedException;
-import org.apache.ignite.IgniteSpring;
-import org.apache.ignite.Ignition;
+import com.hazelcast.core.HazelcastInstance;
+import com.performance.GeneralArguments;
+import com.performance.model.Employee;
+import com.performance.model.dataAPI;
+import org.apache.ignite.*;
 import org.apache.ignite.cache.eviction.lru.LruEvictionPolicy;
 import org.apache.ignite.configuration.*;
 import org.apache.ignite.internal.util.IgniteUtils;
@@ -40,6 +41,7 @@ import java.net.URL;
 import java.util.Map;
 
 import static org.apache.ignite.cache.CacheMemoryMode.OFFHEAP_VALUES;
+import static org.yardstickframework.BenchmarkUtils.println;
 
 /**
  * Standalone Ignite node.
@@ -51,6 +53,7 @@ public class IgniteNode implements BenchmarkServer {
     /** Client mode. */
     private boolean clientMode;
 
+    private static int cacheSize = GeneralArguments.cacheSize;
     /** */
     public IgniteNode() {
         // No-op.
@@ -134,10 +137,10 @@ public class IgniteNode implements BenchmarkServer {
             cc.setWriteBehindEnabled(args.isWriteBehind());
         }
 
-        TransactionConfiguration tc = c.getTransactionConfiguration();
-
-        tc.setDefaultTxConcurrency(args.txConcurrency());
-        tc.setDefaultTxIsolation(args.txIsolation());
+//        TransactionConfiguration tc = c.getTransactionConfiguration();
+//
+//        tc.setDefaultTxConcurrency(args.txConcurrency());
+//        tc.setDefaultTxIsolation(args.txIsolation());
 
         TcpCommunicationSpi commSpi = (TcpCommunicationSpi)c.getCommunicationSpi();
 
@@ -147,6 +150,9 @@ public class IgniteNode implements BenchmarkServer {
         c.setCommunicationSpi(commSpi);
 
         ignite = IgniteSpring.start(c, appCtx);
+        initializeMaps(ignite);
+
+        println("I'm going to run forever");
     }
 
     /**
@@ -203,6 +209,7 @@ public class IgniteNode implements BenchmarkServer {
     /** {@inheritDoc} */
     @Override public void stop() throws Exception {
         Ignition.stopAll(true);
+        println("I'm stopped now!!!");
     }
 
     /** {@inheritDoc} */
@@ -215,5 +222,34 @@ public class IgniteNode implements BenchmarkServer {
      */
     public Ignite ignite() {
         return ignite;
+    }
+
+    private static void initializeMaps(Ignite instance) {
+        IgniteCache map = instance.getOrCreateCache("employees");
+
+        if(map.randomEntry()==null) {
+            dataAPI dataApi = new dataAPI();
+
+            for (int i = 0; i < cacheSize; i++) {
+                map.put(i, dataApi.getEmployee(i));
+            }
+
+            System.out.println("Initialization done!");
+        }
+    }
+
+    private static String getRandomAge() {
+        double rand = Math.random();
+        rand = rand * 100;
+
+        int intRand = (int)rand;
+
+        if(intRand >= 75) {
+            return "30";
+        } else if (intRand < 75 && intRand > 40) {
+            return "25";
+        } else {
+            return "20";
+        }
     }
 }
