@@ -46,8 +46,12 @@ public abstract class IgniteAbstractBenchmark extends BenchmarkDriverAdapter {
     /** {@inheritDoc} */
     @Override public void setUp(BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
+        println("Started benchmark with id: " + cfg.memberId());
 
         jcommander(cfg.commandLineArguments(), args, "<ignite-driver>");
+
+        println("I'm the client I want to setup!");
+
 
         if (Ignition.state() != IgniteState.STARTED) {
             node = new IgniteNode(args.isClientOnly() && !args.isNearCache());
@@ -59,10 +63,12 @@ public abstract class IgniteAbstractBenchmark extends BenchmarkDriverAdapter {
             node = new IgniteNode(args.isClientOnly() && !args.isNearCache(), Ignition.ignite());
 
         waitForNodes();
+        println("I finished the setup!");
     }
 
     /** {@inheritDoc} */
     @Override public void tearDown() throws Exception {
+        println("I'm tearing down!!!");
         if (node != null)
             node.stop();
     }

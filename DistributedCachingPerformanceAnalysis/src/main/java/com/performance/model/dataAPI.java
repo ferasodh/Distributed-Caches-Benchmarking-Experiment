@@ -2,7 +2,6 @@ package com.performance.model;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,13 +10,12 @@ import java.util.List;
 
 public class dataAPI {
 
-    public Employee [] employees = new Employee[7944];
+	public static int employeesSize = 7944;
+    public Employee [] employees = new Employee[employeesSize];
     public Organization [] organizations = new Organization[10];
-    ClassLoader classLoader = getClass().getClassLoader();
-
     public dataAPI(){
         try {
-            CSVReader reader = new CSVReader(new FileReader(new File("src/main/resources/data/Organizations.csv").getAbsolutePath()));
+            CSVReader reader = new CSVReader(new FileReader("src/main/resources/Organizations.csv"));
             String [] nextLine;
             nextLine = reader.readNext();
             for(int i=0;i<10;i++){
@@ -30,7 +28,7 @@ public class dataAPI {
             }
             reader.close();
 
-            reader = new CSVReader(new FileReader(new File("src/main/resources/data/Users.csv").getAbsolutePath()));
+            reader = new CSVReader(new FileReader("src/main/resources/Users.csv"));
             nextLine = reader.readNext();
             for(int j=0;j<7944;j++){
                 nextLine = reader.readNext();
@@ -38,7 +36,7 @@ public class dataAPI {
                 employees[j].setID(Integer.valueOf(nextLine[0]));
                 employees[j].setName(nextLine[1]);
                 employees[j].setPassword(nextLine[2]);
-                employees[j].setAge(nextLine[3]);
+                employees[j].setAge(Integer.valueOf(nextLine[3]));
                 employees[j].setOrganization(organizations[Integer.valueOf(nextLine[4])-1]);
             }
             reader.close();

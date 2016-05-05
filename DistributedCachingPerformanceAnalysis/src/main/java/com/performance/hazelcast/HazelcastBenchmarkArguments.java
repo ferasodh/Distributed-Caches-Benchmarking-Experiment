@@ -3,6 +3,7 @@ package com.performance.hazelcast;
 import com.beust.jcommander.Parameter;
 
 public class HazelcastBenchmarkArguments {
+	
 	/** Port echo server listens on. */
     @SuppressWarnings("FieldCanBeLocal")
     @Parameter(names = "--port", description = "Echo server port")
