@@ -1,5 +1,6 @@
 package com.performance.hazelcast;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,8 @@ import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.hazelcast.query.SqlPredicate;
+import com.performance.GeneralArguments;
 import com.performance.model.Employee;
 
 import static org.yardstickframework.BenchmarkUtils.println;
@@ -22,7 +25,7 @@ import static org.yardstickframework.BenchmarkUtils.println;
  * @author Haytham Salhi
  *
  */
-public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
+public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter {
 	
 	// These our special args 
 	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
@@ -30,9 +33,10 @@ public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
 	private HazelcastInstance hzClient;
 	private IMap<Integer, Employee> remoteMap;
 	
+	private static String serverIP = GeneralArguments.serverIP;
+	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
-		
 		super.setUp(cfg);
 		
 		println("Started benchmark with id: " + cfg.memberId());
@@ -42,10 +46,9 @@ public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
 		println("I'm the client I want to setup!");
 		
 		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getNetworkConfig().addAddress("127.0.0.1:5701", "127.0.0.1:5702");
+		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
 		
 		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
-		
 		remoteMap = hzClient.getMap("employees");
 		
 		println("I finished the setup!");
@@ -64,20 +67,14 @@ public class HazelcastDriverBenchmark extends BenchmarkDriverAdapter {
 	@Override
 	public boolean test(Map<Object, Object> ctx) throws Exception {
 		println("I'm the test");
-		println(args.toString());
+		println("Args:" + args.toString());
 		
     	Random random = new Random();
-    	Employee emp = null;
-		int x = random.nextInt(remoteMap.size());
+		int x = random.nextInt(GeneralArguments.agesBound);
 		
-		emp = remoteMap.get(x);
+		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + x));
 		
-		if(emp.getAge().equals("aa")) {
-			System.out.println("Will never happen!!!!");
-		}
-		
-		println("I finished with emp = " + emp);
-		
+		println("I finished with employees of size = " + employees.size());
 		return true;
 	}
 	

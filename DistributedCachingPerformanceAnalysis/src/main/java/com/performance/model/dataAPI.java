@@ -10,7 +10,8 @@ import java.util.List;
 
 public class dataAPI {
 
-    public Employee [] employees = new Employee[7944];
+	public static int employeesSize = 7944;
+    public Employee [] employees = new Employee[employeesSize];
     public Organization [] organizations = new Organization[10];
     public dataAPI(){
         try {
