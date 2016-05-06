@@ -1,6 +1,7 @@
 package com.performance.hazelcast;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,10 +29,9 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 	// These our special args 
 	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 	
-	private HazelcastInstance hzClient;
-	private IMap<Integer, Employee> remoteMap;
-	
 	private static String serverIP = GeneralArguments.serverIP;
+	
+	private static Map<Long, IMap<Integer, Employee>> threadLocals = new HashMap<>();
 	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
@@ -46,8 +46,10 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
 		
-		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
-		remoteMap = hzClient.getMap("employees");
+		HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(clientConfig);
+		IMap<Integer, Employee> remoteMap = hzClient.getMap("employees");
+		
+		HazelcastGetDriverBenchmark.initializeMaps(remoteMap);
 		
 		println("I finished the setup!");
 	}
@@ -67,10 +69,30 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 		println("I'm the test");
 		println("Args:" + args.toString());
 		
+		IMap<Integer, Employee> threadLocalMap = threadLocals.get(Thread.currentThread().getId());
+		
+		if(threadLocalMap == null) {
+			synchronized (this) {
+				System.out.println("This thread " + Thread.currentThread().getId() + " not exists! Adding it....");
+				// Not exists connect 
+				ClientConfig clientConfig = new ClientConfig();
+				clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
+				
+				HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(clientConfig);
+				IMap<Integer, Employee> remoteMap = hzClient.getMap("employees");
+				
+				threadLocals.put(Thread.currentThread().getId(), remoteMap);
+				
+				threadLocalMap = threadLocals.get(Thread.currentThread().getId());
+				
+				System.out.println("Added " + remoteMap);
+			}
+		}
+		
     	Random random = new Random();
 		int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
-		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + randomAge));
+		Collection<Employee> employees = threadLocalMap.values(new SqlPredicate("age > " + randomAge));
 		
 		println("I finished with employees of size = " + employees.size());
 		return true;

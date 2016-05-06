@@ -1,5 +1,6 @@
 package com.performance.hazelcast;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.performance.GeneralArguments;
 import com.performance.model.Employee;
+import com.performance.model.dataAPI;
 
 import static org.yardstickframework.BenchmarkUtils.println;
 
@@ -26,10 +28,10 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 	// These our special args 
 	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 	
-	private HazelcastInstance hzClient;
-	private IMap<Integer, Employee> remoteMap;
 	
 	private static String serverIP = GeneralArguments.serverIP;
+	
+	private static Map<Long, IMap<Integer, Employee>> threadLocals = new HashMap<>();
 	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
@@ -44,8 +46,10 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
 		
-		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
-		remoteMap = hzClient.getMap("employees");
+		HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(clientConfig);
+		IMap<Integer, Employee> remoteMap = hzClient.getMap("employees");
+		
+		initializeMaps(remoteMap);
 		
 		println("I finished the setup!");
 	}
@@ -65,10 +69,30 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 		println("I'm the test");
 		println("Args:" + args.toString());
 		
-    	Random random = new Random();
-		int x = random.nextInt(remoteMap.size());
+		IMap<Integer, Employee> threadLocalMap = threadLocals.get(Thread.currentThread().getId());
 		
-		Employee emp = remoteMap.get(x);
+		if(threadLocalMap == null) {
+			synchronized (this) {
+				System.out.println("This thread " + Thread.currentThread().getId() + " not exists! Adding it....");
+				// Not exists connect 
+				ClientConfig clientConfig = new ClientConfig();
+				clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
+				
+				HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(clientConfig);
+				IMap<Integer, Employee> remoteMap = hzClient.getMap("employees");
+				
+				threadLocals.put(Thread.currentThread().getId(), remoteMap);
+				
+				threadLocalMap = threadLocals.get(Thread.currentThread().getId());
+				
+				System.out.println("Added " + remoteMap);
+			}
+		}
+		
+    	Random random = new Random();
+		int x = random.nextInt(threadLocalMap.size());
+		
+		Employee emp = threadLocalMap.get(x);
 		
 		println("I finished with emp = " + emp);
 		return true;
@@ -120,4 +144,15 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 //			//blackhole.consume(emp);
 //		}	
 //    }
+	
+	public static void initializeMaps(IMap<Integer, Employee> remoteMap) {
+            dataAPI dataApi = new dataAPI();
+            
+            for (int i = 0; i < GeneralArguments.cacheSize; i++) {
+            	remoteMap.put(i, dataApi.getEmployee(i));
+    		}
+            
+            System.out.println(remoteMap.get(3));
+            System.out.println("Initialization done!");
+     }
 }
