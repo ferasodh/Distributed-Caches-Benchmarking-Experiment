@@ -94,8 +94,8 @@ public class InfinispanClient {
 				throws IOException {
 			String name = reader.readString("name");
 			Integer age = reader.readInt("age");
-			
-			return new Employee(name, age);
+			return null;
+			//return new Employee(name, age);
 		}
 
 		@Override
