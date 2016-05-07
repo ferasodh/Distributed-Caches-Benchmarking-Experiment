@@ -1,5 +1,6 @@
 package com.performance.hazelcast;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.performance.GeneralArguments;
 import com.performance.model.Employee;
+import com.performance.model.dataAPI;
 
 import static org.yardstickframework.BenchmarkUtils.println;
 
@@ -120,4 +122,15 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 //			//blackhole.consume(emp);
 //		}	
 //    }
+	
+	public static void initializeMaps(IMap<Integer, Employee> remoteMap) {
+            dataAPI dataApi = new dataAPI();
+            
+            for (int i = 0; i < GeneralArguments.cacheSize; i++) {
+            	remoteMap.put(i, dataApi.getEmployee(i));
+    		}
+            
+            System.out.println(remoteMap.get(3));
+            System.out.println("Initialization done!");
+     }
 }

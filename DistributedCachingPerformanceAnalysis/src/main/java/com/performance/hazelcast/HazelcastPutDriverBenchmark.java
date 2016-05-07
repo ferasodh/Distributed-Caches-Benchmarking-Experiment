@@ -27,10 +27,10 @@ public class HazelcastPutDriverBenchmark extends BenchmarkDriverAdapter {
 	// These our special args 
 	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 	
+	private static String serverIP = GeneralArguments.serverIP;
+	
 	private HazelcastInstance hzClient;
 	private IMap<Integer, Employee> remoteMap;
-	
-	private static String serverIP = GeneralArguments.serverIP;
 	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
