@@ -2,7 +2,7 @@ package com.performance.model;
 
 import java.util.List;
 
-public class testt {
+public class Test {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
