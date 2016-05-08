@@ -17,7 +17,7 @@ import com.performance.model.dataAPI;
 import static org.yardstickframework.BenchmarkUtils.println;
 
 /**
- * A benchmark for hazelcast
+ * A benchmark for infinispan
  * @author Haytham Salhi
  *
  */

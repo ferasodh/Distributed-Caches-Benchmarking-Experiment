@@ -16,7 +16,7 @@ import com.performance.model.Employee;
 import static org.yardstickframework.BenchmarkUtils.println;
 
 /**
- * A benchmark for hazelcast
+ * A benchmark for infinispan
  * @author Haytham Salhi
  *
  */
