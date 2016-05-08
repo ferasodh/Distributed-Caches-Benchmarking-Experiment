@@ -1,0 +1,16 @@
+package com.performance.model;
+
+message Employee {
+  required int32 ID = 1;
+  required string name = 2;
+  required int32 age = 3;
+  required string password = 4;
+  repeated Organization organization = 5;
+}
+
+message Organization {
+  required int32 ID = 1;
+  required string name = 2;
+  required string acronym = 3;
+  required string employeeNumber = 4;
+}

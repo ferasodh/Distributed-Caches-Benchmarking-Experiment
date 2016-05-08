@@ -67,7 +67,10 @@ public class InfinispanCustomQueryDriverBenchmark extends BenchmarkDriverAdapter
 		
 		SerializationContext srcCtx = ProtoStreamMarshaller.getSerializationContext(rcm);
 		
-		srcCtx.registerProtoFiles(FileDescriptorSource.fromResources("com/performance/infinispan/proto/library.proto"));
+		// THE FOLLOING SHOULD BE /com/performance/infinispan/proto/library.proto"
+		// but, when packaging using maven, this file des not exist, so I copy it in src/main/resources as well
+		// So this config works when packaging using maven
+		srcCtx.registerProtoFiles(FileDescriptorSource.fromResources("library.proto"));
 		srcCtx.registerMarshaller(new EmployeeMarshaller());
 		srcCtx.registerMarshaller(new OrganizationMarshaller());
 		
