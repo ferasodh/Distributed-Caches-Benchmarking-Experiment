@@ -49,7 +49,7 @@ public class InfinispanCustomQueryDriverBenchmark extends BenchmarkDriverAdapter
 		
 		println("Started benchmark with id: " + cfg.memberId());
 		
-		BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
+		BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<infinispan-driver>");
 		
 		println("I'm the client I want to setup!");
 		
