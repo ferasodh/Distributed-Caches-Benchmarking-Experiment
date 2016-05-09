@@ -38,7 +38,7 @@ public class IgniteBenchmarkArguments {
     private int backups;
 
     @Parameter(names = {"-cfg", "--Config"}, description = "Configuration file")
-    private String cfg = "config/ignite-localhost-config.xml";
+    private String cfg = "ignite-config/ignite-localhost-config.xml";
 
     /** */
     @Parameter(names = {"-sm", "--syncMode"}, description = "Synchronization mode")

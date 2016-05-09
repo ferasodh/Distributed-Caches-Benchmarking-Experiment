@@ -17,16 +17,22 @@
 
 package com.performance.ignite.server;
 
+import com.hazelcast.config.EvictionPolicy;
 import com.hazelcast.core.HazelcastInstance;
 import com.performance.GeneralArguments;
 import com.performance.model.Employee;
 import com.performance.model.dataAPI;
 import org.apache.ignite.*;
+import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cache.eviction.lru.LruEvictionPolicy;
 import org.apache.ignite.configuration.*;
 import org.apache.ignite.internal.util.IgniteUtils;
+import org.apache.ignite.internal.util.typedef.F;
 import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi;
+import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
+import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder;
+import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
@@ -36,8 +42,11 @@ import org.yardstickframework.BenchmarkConfiguration;
 import org.yardstickframework.BenchmarkServer;
 import org.yardstickframework.BenchmarkUtils;
 
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 import static org.apache.ignite.cache.CacheMemoryMode.OFFHEAP_VALUES;
@@ -74,73 +83,101 @@ public class IgniteNode implements BenchmarkServer {
     @Override public void start(BenchmarkConfiguration cfg) throws Exception {
         IgniteBenchmarkArguments args = new IgniteBenchmarkArguments();
 
+//        IgniteConfiguration c=new IgniteConfiguration();
+
         BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<ignite-node>");
 
         IgniteBiTuple<IgniteConfiguration, ? extends ApplicationContext> tup = loadConfiguration(args.configuration());
 
+//        TcpDiscoverySpi spi = new TcpDiscoverySpi();
+//        TcpDiscoveryVmIpFinder ipFinder = new TcpDiscoveryMulticastIpFinder();
+//        ipFinder.setAddresses(Arrays.asList("127.0.0.1"));
+//        spi.setIpFinder(ipFinder);
+
         IgniteConfiguration c = tup.get1();
-
-        assert c != null;
-
         ApplicationContext appCtx = tup.get2();
+//        IgniteConfiguration c = new IgniteConfiguration();
+//        c.setDiscoverySpi(spi);
 
-        assert appCtx != null;
+
+//        CacheConfiguration cc=new CacheConfiguration();
+//        cc.setEvictionPolicy(new LruEvictionPolicy());
+//        cc.setCacheMode(CacheMode.PARTITIONED);
+//        c.setLocalHost("127.0.0.1");
+//        c.setCacheConfiguration(cc);
+
+
+//        for (CacheConfiguration cc : c.getCacheConfiguration()) {
+//            cc.setEvictionPolicy(new LruEvictionPolicy());
+//        }
+//        assert c != null;
+
+
+        boolean cl = args.isClientOnly() && (args.isNearCache() || clientMode);
+
+        if (cl){
+                c.setClientMode(true);
+                this.clientMode=true;
+
+        }
+
+//        assert appCtx != null;
 
         for (CacheConfiguration cc : c.getCacheConfiguration()) {
             // IgniteNode can not run in CLIENT_ONLY mode,
             // except the case when it's used inside IgniteAbstractBenchmark.
-            boolean cl = args.isClientOnly() && (args.isNearCache() || clientMode);
+//            boolean cl = args.isClientOnly() && (args.isNearCache() || clientMode);
 
-            if (cl)
-                c.setClientMode(true);
+//            if (cl){
+//                c.setClientMode(true);
+//                this.clientMode=true;
+//                cc.setEvictionPolicy(new LruEvictionPolicy(50000));
+//            }
 
-            if (args.isNearCache()) {
-                NearCacheConfiguration nearCfg = new NearCacheConfiguration();
+//            if (args.isNearCache()) {
+//                NearCacheConfiguration nearCfg = new NearCacheConfiguration();
 
-                if (args.getNearCacheSize() != 0)
-                    nearCfg.setNearEvictionPolicy(new LruEvictionPolicy(args.getNearCacheSize()));
+//                if (args.getNearCacheSize() != 0)
+//                    nearCfg.setNearEvictionPolicy(new LruEvictionPolicy(args.getNearCacheSize()));
 
-                cc.setNearConfiguration(nearCfg);
-            }
+//                cc.setNearConfiguration(nearCfg);
+//            }
 
-            cc.setWriteSynchronizationMode(args.syncMode());
+//            cc.setWriteSynchronizationMode(args.syncMode());
 
-            if (args.orderMode() != null)
-                cc.setAtomicWriteOrderMode(args.orderMode());
+//            if (args.orderMode() != null)
+//                cc.setAtomicWriteOrderMode(args.orderMode());
 
-            cc.setBackups(args.backups());
+//            cc.setBackups(args.backups());
 
-            if (args.restTcpPort() != 0) {
-                ConnectorConfiguration ccc = new ConnectorConfiguration();
-
-                ccc.setPort(args.restTcpPort());
-
-                if (args.restTcpHost() != null)
-                    ccc.setHost(args.restTcpHost());
-
-                c.setConnectorConfiguration(ccc);
-            }
-
-            if (args.isOffHeap()) {
-                cc.setOffHeapMaxMemory(0);
-
-                if (args.isOffheapValues())
-                    cc.setMemoryMode(OFFHEAP_VALUES);
-                else
-                    cc.setEvictionPolicy(new LruEvictionPolicy(50000));
-            }
-
-            cc.setReadThrough(args.isStoreEnabled());
-
-            cc.setWriteThrough(args.isStoreEnabled());
-
-            cc.setWriteBehindEnabled(args.isWriteBehind());
-        }
-
-//        TransactionConfiguration tc = c.getTransactionConfiguration();
+//            if (args.restTcpPort() != 0) {
+//                ConnectorConfiguration ccc = new ConnectorConfiguration();
 //
-//        tc.setDefaultTxConcurrency(args.txConcurrency());
-//        tc.setDefaultTxIsolation(args.txIsolation());
+//                ccc.setPort(args.restTcpPort());
+//
+//                if (args.restTcpHost() != null)
+//                    ccc.setHost(args.restTcpHost());
+//
+//                c.setConnectorConfiguration(ccc);
+//            }
+
+//            if (args.isOffHeap()) {
+//                cc.setOffHeapMaxMemory(0);
+//
+//                if (args.isOffheapValues())
+//                    cc.setMemoryMode(OFFHEAP_VALUES);
+//                else
+//
+//            }
+
+
+//            cc.setReadThrough(args.isStoreEnabled());
+
+//            cc.setWriteThrough(args.isStoreEnabled());
+
+//            cc.setWriteBehindEnabled(args.isWriteBehind());
+//            cc.setEvictionPolicy(new LruEvictionPolicy());
+        }
 
         TcpCommunicationSpi commSpi = (TcpCommunicationSpi)c.getCommunicationSpi();
 
@@ -149,8 +186,34 @@ public class IgniteNode implements BenchmarkServer {
 
         c.setCommunicationSpi(commSpi);
 
+
+//        TcpCommunicationSpi commSpi = new TcpCommunicationSpi();//(TcpCommunicationSpi)c.getCommunicationSpi();
+
+//        commSpi.setLocalPort(47501);
+//        commSpi.setLocalAddress("127.0.0.1");
+//        commSpi.setLocalPortRange(50);
+//
+//        if (commSpi == null)
+//            commSpi = new TcpCommunicationSpi();
+
+//        c.setCommunicationSpi(commSpi);
+//        final Map<InetSocketAddress, ? extends Collection<InetSocketAddress>> mp = F.asMap(
+//                new InetSocketAddress("127.0.0.1", 47501), F.asList(new InetSocketAddress("127.0.0.1", 47501)),
+//                new InetSocketAddress("127.0.0.1", 47503), F.asList(new InetSocketAddress("127.0.0.1", 47503))
+//        );
+//
+//        c.setAddressResolver(new AddressResolver() {
+//            @Override public Collection<InetSocketAddress> getExternalAddresses(InetSocketAddress addr) {
+//                return mp.get(addr);
+//            }
+//        });
+
+
         ignite = IgniteSpring.start(c, appCtx);
-        initializeMaps(ignite);
+
+        if(!this.clientMode){
+            initializeMaps(ignite);
+        }
 
         println("I'm going to run forever");
     }
@@ -225,7 +288,14 @@ public class IgniteNode implements BenchmarkServer {
     }
 
     private static void initializeMaps(Ignite instance) {
-        IgniteCache map = instance.getOrCreateCache("employees");
+        println("Initialize Maps");
+
+        CacheConfiguration<Integer, Employee> pointCfg = new CacheConfiguration<>("employees");
+
+        pointCfg.setName("employees");
+        pointCfg.setIndexedTypes(Integer.class, Employee.class);
+        IgniteCache map = instance.cache("employees");
+
 
         if(map.randomEntry()==null) {
             dataAPI dataApi = new dataAPI();
@@ -235,7 +305,9 @@ public class IgniteNode implements BenchmarkServer {
             }
 
             System.out.println("Initialization done!");
+            println("done initialize Maps");
         }
+        println("Finished initialize Maps");
     }
 
     private static String getRandomAge() {

@@ -41,167 +41,52 @@
                     <property name="swapEnabled" value="false"/>
                 </bean>
 
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="atomic-offheap"/>
 
-                    <property name="cacheMode" value="PARTITIONED"/>
+                <!--<bean class="org.apache.ignite.configuration.CacheConfiguration">-->
+                    <!--<property name="name" value="query"/>-->
 
-                    <property name="atomicityMode" value="ATOMIC"/>
+                    <!--<property name="cacheMode" value="PARTITIONED"/>-->
 
-                    <property name="swapEnabled" value="false"/>
+                    <!--<property name="atomicityMode" value="ATOMIC"/>-->
 
-                    <property name="memoryMode" value="OFFHEAP_TIERED"/>
-                </bean>
+                    <!--<property name="swapEnabled" value="false"/>-->
 
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="atomic-offheap-values"/>
+                    <!--<property name="typeMetadata">-->
+                        <!--<list>-->
+                            <!--<bean class="org.apache.ignite.cache.CacheTypeMetadata">-->
+                                <!--<property name="keyType" value="java.lang.Integer"/>-->
+                                <!--<property name="valueType" value="org.apache.ignite.yardstick.cache.model.Organization"/>-->
 
-                    <property name="cacheMode" value="PARTITIONED"/>
+                                <!--<property name="ascendingFields">-->
+                                    <!--<map>-->
+                                        <!--<entry key="id" value="java.lang.Integer"/>-->
+                                        <!--<entry key="name" value="java.lang.String"/>-->
+                                    <!--</map>-->
+                                <!--</property>-->
+                            <!--</bean>-->
+                            <!--<bean class="org.apache.ignite.cache.CacheTypeMetadata">-->
+                                <!--<property name="keyType" value="java.lang.Integer"/>-->
+                                <!--<property name="valueType" value="org.apache.ignite.yardstick.cache.model.Person"/>-->
 
-                    <property name="atomicityMode" value="ATOMIC"/>
+                                <!--<property name="ascendingFields">-->
+                                    <!--<map>-->
+                                        <!--<entry key="id" value="java.lang.Integer"/>-->
+                                        <!--<entry key="orgId" value="java.lang.Integer"/>-->
+                                        <!--<entry key="salary" value="java.lang.Double"/>-->
+                                    <!--</map>-->
+                                <!--</property>-->
 
-                    <property name="swapEnabled" value="false"/>
+                                <!--<property name="queryFields">-->
+                                    <!--<map>-->
+                                        <!--<entry key="firstName" value="java.lang.String"/>-->
+                                        <!--<entry key="lastName" value="java.lang.String"/>-->
+                                    <!--</map>-->
+                                <!--</property>-->
+                            <!--</bean>-->
+                        <!--</list>-->
+                    <!--</property>-->
+                <!--</bean>-->
 
-                    <property name="memoryMode" value="OFFHEAP_VALUES"/>
-
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="tx"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="TRANSACTIONAL"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="tx-offheap"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="TRANSACTIONAL"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                    <property name="memoryMode" value="OFFHEAP_TIERED"/>
-
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="tx-offheap-values"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="TRANSACTIONAL"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                    <property name="memoryMode" value="OFFHEAP_VALUES"/>
-
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="atomic-index"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="ATOMIC"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                    <property name="indexedTypes">
-                        <list>
-                            <value>java.lang.Integer</value>
-                            <value>org.apache.ignite.yardstick.cache.model.Person1</value>
-
-                            <value>java.lang.Integer</value>
-                            <value>org.apache.ignite.yardstick.cache.model.Person2</value>
-
-                            <value>java.lang.Integer</value>
-                            <value>org.apache.ignite.yardstick.cache.model.Person8</value>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="query"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="ATOMIC"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                    <property name="typeMetadata">
-                        <list>
-                            <bean class="org.apache.ignite.cache.CacheTypeMetadata">
-                                <property name="keyType" value="java.lang.Integer"/>
-                                <property name="valueType" value="org.apache.ignite.yardstick.cache.model.Organization"/>
-
-                                <property name="ascendingFields">
-                                    <map>
-                                        <entry key="id" value="java.lang.Integer"/>
-                                        <entry key="name" value="java.lang.String"/>
-                                    </map>
-                                </property>
-                            </bean>
-                            <bean class="org.apache.ignite.cache.CacheTypeMetadata">
-                                <property name="keyType" value="java.lang.Integer"/>
-                                <property name="valueType" value="org.apache.ignite.yardstick.cache.model.Person"/>
-
-                                <property name="ascendingFields">
-                                    <map>
-                                        <entry key="id" value="java.lang.Integer"/>
-                                        <entry key="orgId" value="java.lang.Integer"/>
-                                        <entry key="salary" value="java.lang.Double"/>
-                                    </map>
-                                </property>
-
-                                <property name="queryFields">
-                                    <map>
-                                        <entry key="firstName" value="java.lang.String"/>
-                                        <entry key="lastName" value="java.lang.String"/>
-                                    </map>
-                                </property>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="query-offheap"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="ATOMIC"/>
-
-                    <property name="swapEnabled" value="false"/>
-
-                    <property name="memoryMode" value="OFFHEAP_TIERED"/>
-
-                    <property name="indexedTypes">
-                        <list>
-                            <value>java.lang.Integer</value>
-                            <value>org.apache.ignite.yardstick.cache.model.Organization</value>
-
-                            <value>java.lang.Integer</value>
-                            <value>org.apache.ignite.yardstick.cache.model.Person</value>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="compute"/>
-
-                    <property name="cacheMode" value="PARTITIONED"/>
-
-                    <property name="atomicityMode" value="TRANSACTIONAL"/>
-
-                    <property name="swapEnabled" value="false"/>
-                </bean>
             </list>
         </property>
 
@@ -209,10 +94,10 @@
             <list/>
         </property>
 
-        <property name="loadBalancingSpi">
-            <bean class="org.apache.ignite.spi.loadbalancing.roundrobin.RoundRobinLoadBalancingSpi">
-                <property name="perTask" value="false"/>
-            </bean>
-        </property>
+        <!--<property name="loadBalancingSpi">-->
+            <!--<bean class="org.apache.ignite.spi.loadbalancing.roundrobin.RoundRobinLoadBalancingSpi">-->
+                <!--<property name="perTask" value="false"/>-->
+            <!--</bean>-->
+        <!--</property>-->
     </bean>
 </beans>

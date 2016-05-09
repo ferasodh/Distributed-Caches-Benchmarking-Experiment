@@ -33,7 +33,9 @@ public class IgnitePutBenchmark extends IgniteCacheAbstractBenchmark<Integer, Ob
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         println("I'm the test");
         println("Args:" + args.toString());
-        int key = nextRandom(args.range());
+        int key = nextRandom(4999);
+        println("key:" + key);
+
         dataAPI dataApi = new dataAPI();
 
         Employee emp = dataApi.getEmployee(key);

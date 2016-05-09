@@ -34,8 +34,8 @@ public class IgniteGetBenchmark extends IgniteCacheAbstractBenchmark<Integer, Ob
         println("I'm the test");
         println("Args:" + args.toString());
 
-        Random random = new Random();
-        int key = nextRandom(args.range());
+//        Random random = new Random();
+        int key = nextRandom(4999);
 
 
         Employee emp = (Employee) cache.get(key);
