@@ -20,6 +20,8 @@ package com.performance.model;
 
 import java.io.Serializable;
 
+import org.infinispan.protostream.annotations.ProtoField;
+
 /**
       /**
       *
@@ -28,15 +30,30 @@ import java.io.Serializable;
       */
      public class Organization implements Serializable {
          private static final long serialVersionUID = 553885034467846744L;
-
-         private int ID;
-         private String name;
-         private String acronym;
-         private String employeeNumber;
+         
+         @ProtoField(number = 1, required = true)
+         public int ID;
+         
+         @ProtoField(number = 2)
+         public String name;
+         
+         @ProtoField(number = 3)
+         public String acronym;
+         
+         @ProtoField(number = 4)
+         public String employeeNumber;
 
          public Organization() {}
+         
+         public Organization(int iD, String name, String acronym, String employeeNumber) {
+			super();
+			ID = iD;
+			this.name = name;
+			this.acronym = acronym;
+			this.employeeNumber = employeeNumber;
+		}
 
-         public Organization(String name, String employeeNumber) {
+		public Organization(String name, String employeeNumber) {
              super();
              this.name = name;
              this.employeeNumber = employeeNumber;

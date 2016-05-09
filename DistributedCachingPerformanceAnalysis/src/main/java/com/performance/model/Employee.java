@@ -1,6 +1,8 @@
 package com.performance.model;
 
 import java.io.Serializable;
+
+import org.infinispan.protostream.annotations.ProtoField;
 /**
  *
  * @author Haytham Salhi and Rabee Naser
@@ -9,16 +11,34 @@ import java.io.Serializable;
  */
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 553885034467846744L;
-
-	private int ID;
-	private String name;
-	private int age;
-	private String password;
-	private Organization organization;
-
-
+	
+	// @ProtoFied to work, the var should be public
+	
+	@ProtoField(number = 1, required = true)
+	public int ID;
+	
+	@ProtoField(number = 2)
+	public String name;
+	
+	@ProtoField(number = 3, required = true)
+	public int age;
+	
+	@ProtoField(number = 4)
+	public String password;
+	
+	@ProtoField(number = 5)
+	public Organization organization;
 
 	public Employee() {}
+	
+	public Employee(int iD, String name, int age, String password, Organization organization) {
+		super();
+		ID = iD;
+		this.name = name;
+		this.age = age;
+		this.password = password;
+		this.organization = organization;
+	}
 
 	public Employee(String name, int age,String password, Organization organization) {
 		super();
