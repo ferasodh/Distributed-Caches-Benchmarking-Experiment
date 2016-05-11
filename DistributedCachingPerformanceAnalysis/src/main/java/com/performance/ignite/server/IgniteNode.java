@@ -290,12 +290,11 @@ public class IgniteNode implements BenchmarkServer {
     private static void initializeMaps(Ignite instance) {
         println("Initialize Maps");
 
-        CacheConfiguration<Integer, Employee> pointCfg = new CacheConfiguration<>("employees");
+        CacheConfiguration<Integer, Employee> employeesCfg = new CacheConfiguration<>("employees");
 
-        pointCfg.setName("employees");
-        pointCfg.setIndexedTypes(Integer.class, Employee.class);
-        IgniteCache map = instance.cache("employees");
-
+        employeesCfg.setName("employees");
+        employeesCfg.setIndexedTypes(Integer.class, Employee.class);
+        IgniteCache map = instance.getOrCreateCache(employeesCfg);
 
         if(map.randomEntry()==null) {
             dataAPI dataApi = new dataAPI();
