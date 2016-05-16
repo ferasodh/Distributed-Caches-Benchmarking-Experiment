@@ -18,7 +18,7 @@ public class Test {
         System.out.println(list2.get(5).toString());
         System.out.println(list2.get(9).toString());
         System.out.println("\n\n===============Testing get Employee By index===============");
-        System.out.println(testt.getEmployee(5000));
+        System.out.println(testt.getEmployee(1));
         System.out.println("\n\n===============Testing get Organization By index===============");
         System.out.println(testt.getOrganization(5));
     }
