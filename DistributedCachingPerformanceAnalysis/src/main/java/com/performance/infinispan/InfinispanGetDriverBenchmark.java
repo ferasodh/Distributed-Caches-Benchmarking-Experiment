@@ -16,7 +16,7 @@ import com.performance.model.Employee;
 import static org.yardstickframework.BenchmarkUtils.println;
 
 /**
- * A benchmark for hazelcast
+ * A benchmark for infinispan
  * @author Haytham Salhi
  *
  */
@@ -36,7 +36,7 @@ public class InfinispanGetDriverBenchmark extends BenchmarkDriverAdapter{
 		
 		println("Started benchmark with id: " + cfg.memberId());
 		
-		BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
+		BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<infinispan-driver>");
 		
 		println("I'm the client I want to setup!");
 		

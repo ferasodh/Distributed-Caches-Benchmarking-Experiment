@@ -42,7 +42,7 @@ public class IgniteSqlQueryBenchmark extends IgniteCacheAbstractBenchmark<Intege
 
         Random random = new Random();
         int randomAge = random.nextInt(GeneralArguments.agesBound);
-
+        println("randomAge = " + randomAge);
 
         Collection<Cache.Entry<Integer, Object>> entries = executeQuery(randomAge);
 
@@ -64,6 +64,6 @@ public class IgniteSqlQueryBenchmark extends IgniteCacheAbstractBenchmark<Intege
 
     /** {@inheritDoc} */
     @Override protected IgniteCache<Integer, Object> cache() {
-        return ignite().cache("query");
+        return ignite().cache("employees");
     }
 }

@@ -34,7 +34,7 @@ public class ServerCustomDataInitializer {
 		
 		SerializationContext srcCtx = ProtoStreamMarshaller.getSerializationContext(rcm);
 		
-		srcCtx.registerProtoFiles(FileDescriptorSource.fromResources("com/performance/infinispan/proto/library.proto"));
+		srcCtx.registerProtoFiles(FileDescriptorSource.fromResources("/com/performance/infinispan/proto/library.proto"));
 		srcCtx.registerMarshaller(new EmployeeMarshaller());
 		srcCtx.registerMarshaller(new OrganizationMarshaller());
 		
