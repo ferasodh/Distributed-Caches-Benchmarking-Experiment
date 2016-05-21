@@ -102,6 +102,8 @@ public class HazelcastServer implements BenchmarkServer {
     			map.put(i, dataApi.getEmployee(i));
     		}	
             System.out.println(map.get(3));
+            System.out.println(map.get(cacheSize - 1));
+
             System.out.println("Initialization done!");
         }
 	}
