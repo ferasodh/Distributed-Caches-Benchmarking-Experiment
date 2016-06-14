@@ -112,8 +112,9 @@ public class InfinispanCustomComplexQuery3DriverBenchmark extends BenchmarkDrive
 		//int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
 		Query query = qf.from(Employee.class)
-				.having("age").gt(25)
-				.and().having("name").lt(75)
+				.having("age").gt(50)
+				.and().having("name").like("A%")
+				.and().having("organization.name").like("%tum%")
 				.toBuilder().build();
 		
 		List<Employee> employees = query.list();

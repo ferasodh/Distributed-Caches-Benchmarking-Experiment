@@ -2,7 +2,9 @@ package com.performance.model;
 
 import java.io.Serializable;
 
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 import org.infinispan.protostream.annotations.ProtoField;
 /**
  *
@@ -10,23 +12,26 @@ import org.infinispan.protostream.annotations.ProtoField;
  *
  *
  */
+@Indexed
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 553885034467846744L;
 	
 	// @ProtoFied to work, the var should be public
-	@QuerySqlField(index=true)
+	
 	@ProtoField(number = 1, required = true)
 	public int ID;
-	@QuerySqlField
+	
+	@Field(index=Index.YES)
 	@ProtoField(number = 2)
 	public String name;
-	@QuerySqlField
+	
+	@Field(index=Index.YES)
 	@ProtoField(number = 3, required = true)
 	public int age;
-	@QuerySqlField
+	
 	@ProtoField(number = 4)
 	public String password;
-	@QuerySqlField
+	
 	@ProtoField(number = 5)
 	public Organization organization;
 

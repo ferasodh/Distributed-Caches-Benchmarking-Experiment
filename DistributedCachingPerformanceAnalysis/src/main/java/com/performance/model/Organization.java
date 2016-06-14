@@ -20,6 +20,9 @@ package com.performance.model;
 
 import java.io.Serializable;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 import org.infinispan.protostream.annotations.ProtoField;
 
 /**
@@ -28,12 +31,14 @@ import org.infinispan.protostream.annotations.ProtoField;
       * @author Haytham Salhi and Rabee Naser
       *
       */
+@Indexed
      public class Organization implements Serializable {
          private static final long serialVersionUID = 553885034467846744L;
          
          @ProtoField(number = 1, required = true)
          public int ID;
          
+     	 @Field(index=Index.YES)
          @ProtoField(number = 2)
          public String name;
          

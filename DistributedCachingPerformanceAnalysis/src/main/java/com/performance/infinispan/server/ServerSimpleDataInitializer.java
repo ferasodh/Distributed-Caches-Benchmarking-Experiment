@@ -20,6 +20,8 @@ import com.performance.model.dataAPI;
 
 public class ServerSimpleDataInitializer {
 	
+	// TODO
+	private static final int cache_size = 0;
 	private static String serverIP = GeneralArguments.serverIP;
 	
 	public static void main(String[] args) throws DescriptorParserException, IOException {
@@ -36,7 +38,7 @@ public class ServerSimpleDataInitializer {
         if(cache.isEmpty()) {
             dataAPI dataApi = new dataAPI();
             
-            for (int i = 0; i < GeneralArguments.cacheSize; i++) {
+            for (int i = 0; i < cache_size; i++) {
             	cache.put(i, dataApi.getEmployee(i));
     		}	
             
