@@ -24,7 +24,7 @@ import static org.yardstickframework.BenchmarkUtils.println;
  * @author Haytham Salhi
  *
  */
-public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter {
+public class HazelcastCustomQuery2ComplexDriverBenchmark extends BenchmarkDriverAdapter {
 	
 	// These our special args 
 	private final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
@@ -68,10 +68,12 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 		println("I'm the test");
 		println("Args:" + args.toString());
 		
-    	//Random random = new Random();
-		//int randomAge = random.nextInt(GeneralArguments.agesBound);
+    	Random random = new Random();
+		int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
-		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > 50"));
+		//Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + randomAge + " and name like 'mac%' and password like '%jgi'"));
+		
+		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age < 25 or age > 75"));
 		
 		println("I finished with employees of size = " + employees.size());
 		return true;
