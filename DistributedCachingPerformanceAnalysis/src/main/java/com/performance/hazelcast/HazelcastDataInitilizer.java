@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by feras on 6/13/16.
  */
-public class HazelcastClient {
+public class HazelcastDataInitilizer {
 
     private static HazelcastInstance hzClient;
     private static IMap<Integer, Employee> remoteMap;
