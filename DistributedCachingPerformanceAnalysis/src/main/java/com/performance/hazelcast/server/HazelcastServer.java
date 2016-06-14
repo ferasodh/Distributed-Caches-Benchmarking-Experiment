@@ -30,6 +30,9 @@ public class HazelcastServer implements BenchmarkServer {
 	
 	private static int cacheSize = GeneralArguments.cacheSize;
 
+	/* (non-Javadoc)
+	 * @see org.yardstickframework.BenchmarkServer#start(org.yardstickframework.BenchmarkConfiguration)
+	 */
 	@Override
 	public void start(BenchmarkConfiguration cfg) throws Exception {
         BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-server>");

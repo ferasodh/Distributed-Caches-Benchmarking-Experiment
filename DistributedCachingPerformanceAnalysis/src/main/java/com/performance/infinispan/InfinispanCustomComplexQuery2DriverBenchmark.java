@@ -32,7 +32,7 @@ import static org.yardstickframework.BenchmarkUtils.println;
  * @author Haytham Salhi
  *
  */
-public class InfinispanCustomQueryDriverBenchmark extends BenchmarkDriverAdapter {
+public class InfinispanCustomComplexQuery2DriverBenchmark extends BenchmarkDriverAdapter {
 	
 	// These our special args 
 	private final InfinispanBenchmarkArguments args = new InfinispanBenchmarkArguments();
@@ -112,7 +112,8 @@ public class InfinispanCustomQueryDriverBenchmark extends BenchmarkDriverAdapter
 		//int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
 		Query query = qf.from(Employee.class)
-				.having("age").gt(50)
+				.having("age").gt(25)
+				.and().having("age").lt(75)
 				.toBuilder().build();
 		
 		List<Employee> employees = query.list();

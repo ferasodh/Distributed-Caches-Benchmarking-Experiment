@@ -10,15 +10,15 @@ import java.util.List;
 
 public class dataAPI {
 
-	public static int employeesSize = 74000;
+	public static int employeesSize = 100000;
     public Employee [] employees = new Employee[employeesSize];
-    public Organization [] organizations = new Organization[10];
+    public Organization [] organizations = new Organization[1000];
     public dataAPI(){
         try {
             CSVReader reader = new CSVReader(new FileReader("src/main/resources/Organization3.csv"));
             String [] nextLine;
             nextLine = reader.readNext();
-            for(int i=0;i<10;i++){
+            for(int i=0;i<1000;i++){
                 nextLine = reader.readNext();
                 organizations[i] = new Organization();
                 organizations[i].setID(Integer.valueOf(nextLine[0]));
@@ -32,6 +32,8 @@ public class dataAPI {
             nextLine = reader.readNext();
             for(int j=0;j<employeesSize;j++){
                 nextLine = reader.readNext();
+                System.out.println(j);
+                System.out.println(nextLine);
                 employees[j] = new Employee();
                 employees[j].setID(Integer.valueOf(nextLine[0]));
                 employees[j].setName(nextLine[1]);

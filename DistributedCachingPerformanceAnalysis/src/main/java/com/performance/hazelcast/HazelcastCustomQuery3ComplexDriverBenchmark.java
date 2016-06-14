@@ -73,7 +73,7 @@ public class HazelcastCustomQuery3ComplexDriverBenchmark extends BenchmarkDriver
 		
 		//Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + randomAge + " and name like 'mac%' and password like '%jgi'"));
 		
-		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age < 25 or age > 75"));
+		Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > 25 and name like 'A%' and organization.name like '%tum%'"));
 		
 		println("I finished with employees of size = " + employees.size());
 		return true;
