@@ -10,7 +10,7 @@ import java.util.List;
 
 public class dataAPI {
 
-	public static int employeesSize = 100000;
+	public static int employeesSize = 1000000;
     public Employee [] employees = new Employee[employeesSize];
     public Organization [] organizations = new Organization[1000];
     public dataAPI(){
