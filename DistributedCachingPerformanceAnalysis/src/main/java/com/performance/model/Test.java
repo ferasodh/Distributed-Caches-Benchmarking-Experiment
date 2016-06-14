@@ -8,12 +8,12 @@ public class Test {
         // TODO Auto-generated method stub
         dataAPI testt = new dataAPI();
         System.out.println("===============Testing get List Of Employees By max index===============");
-        List <Employee> list = testt.getEmployeesFirst(11);
+        List <Employee> list = testt.getEmployeesFirst(1000000);
         System.out.println(list.get(1).toString());
         System.out.println(list.get(5).toString());
         System.out.println(list.get(10).toString());
         System.out.println("\n\n===============Testing get List Of Organizations By max index===============");
-        List <Organization> list2 = testt.getOrganizationsFirst(10);
+        List <Organization> list2 = testt.getOrganizationsFirst(1000);
         System.out.println(list2.get(1).toString());
         System.out.println(list2.get(5).toString());
         System.out.println(list2.get(9).toString());
