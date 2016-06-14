@@ -58,8 +58,14 @@ public class InfinispanCustomComplexQuery2DriverBenchmark extends BenchmarkDrive
 		//cb.addServer().host("10.0.0.1")
 		//.port(11222).marshaller(new ProtoStreamMarshaller());
 		
-		cb
-		.addServers(serverIP + ":11222;" + serverIP + ":11322;" + serverIP + ":11422;" + serverIP + ":11522")
+		cb.addServers(serverIP + ":11222;" 
+		+ serverIP + ":11322;" 
+		+ serverIP + ":11422;" 
+		+ serverIP + ":11522;"
+		+ serverIP + ":11622;"
+		+ serverIP + ":11722;"
+		+ serverIP + ":11822;"
+		+ serverIP + ":11922")
 		.marshaller(new ProtoStreamMarshaller());
 		
 		///API entry point, by default it connects to localhost:11222
@@ -112,8 +118,8 @@ public class InfinispanCustomComplexQuery2DriverBenchmark extends BenchmarkDrive
 		//int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
 		Query query = qf.from(Employee.class)
-				.having("age").gt(25)
-				.and().having("age").lt(75)
+				.having("age").lt(25)
+				.or().having("age").gt(75)
 				.toBuilder().build();
 		
 		List<Employee> employees = query.list();

@@ -21,14 +21,25 @@ public class HazelcastClient {
         int cacheSize=Integer.valueOf(args[1]);
 
         ClientConfig clientConfig = new ClientConfig();
-        clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
-
+        clientConfig.getNetworkConfig().addAddress(serverIP + ":5701",
+        		serverIP + ":5702",
+        		serverIP + ":5703",
+        		serverIP + ":5704",
+        		serverIP + ":5705",
+        		serverIP + ":5706",
+        		serverIP + ":5707",
+        		serverIP + ":5708");
+        
         hzClient = com.hazelcast.client.HazelcastClient.newHazelcastClient(clientConfig);
         remoteMap = hzClient.getMap("employees");
+        remoteMap.addIndex("name", false);
+        remoteMap.addIndex("age", false);
+        remoteMap.addIndex("organization.name", false);
+        
         initializeMaps(remoteMap,cacheSize);
         System.out.println(remoteMap.get(0));
-
-
+        System.out.println(remoteMap.get(remoteMap.size() - 1));
+        System.out.println("emoteMap.size()=" + remoteMap.size());
     }
 
     private static void initializeMaps(IMap<Integer, Employee> map,int cacheSize) {

@@ -25,7 +25,7 @@ import com.performance.model.dataAPI;
  */
 public class HazelcastServerTest  {
 	
-	private static int cacheSize = GeneralArguments.cacheSize;
+	private static int cacheSize = 3;
 
 	
 

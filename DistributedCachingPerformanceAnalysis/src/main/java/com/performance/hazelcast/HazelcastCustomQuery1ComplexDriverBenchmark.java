@@ -45,7 +45,14 @@ public class HazelcastCustomQuery1ComplexDriverBenchmark extends BenchmarkDriver
 		println("I'm the client I want to setup!");
 		
 		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701", serverIP + ":5702", serverIP + ":5703", serverIP + ":5704");
+		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701",
+				serverIP + ":5702",
+				serverIP + ":5703",
+				serverIP + ":5704",
+				serverIP + ":5705",
+				serverIP + ":5706",
+				serverIP + ":5707",
+				serverIP + ":5708");
 		
 		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
 		remoteMap = hzClient.getMap("employees");
@@ -68,8 +75,8 @@ public class HazelcastCustomQuery1ComplexDriverBenchmark extends BenchmarkDriver
 		println("I'm the test");
 		println("Args:" + args.toString());
 		
-    	Random random = new Random();
-		int randomAge = random.nextInt(GeneralArguments.agesBound);
+    	//Random random = new Random();
+		//int randomAge = random.nextInt(GeneralArguments.agesBound);
 		
 		//Collection<Employee> employees = remoteMap.values(new SqlPredicate("age > " + randomAge + " and name like 'mac%' and password like '%jgi'"));
 		

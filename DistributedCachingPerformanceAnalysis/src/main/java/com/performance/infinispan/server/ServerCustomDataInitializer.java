@@ -20,13 +20,22 @@ import com.performance.model.dataAPI;
 
 public class ServerCustomDataInitializer {
 	
+	// TODO
+	private static final int CACHE_SIZE = 1000;
 	private static String serverIP = GeneralArguments.serverIP;
 	
 	public static void main(String[] args) throws DescriptorParserException, IOException {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
-		
-		cb.addServers(serverIP + ":11222;" + serverIP + ":11322;" + serverIP + ":11422;" + serverIP + ":11522").marshaller(new ProtoStreamMarshaller());
+		cb.addServers(serverIP + ":11222;" 
+		+ serverIP + ":11322;" 
+		+ serverIP + ":11422;" 
+		+ serverIP + ":11522;"
+		+ serverIP + ":11622;"
+		+ serverIP + ":11722;"
+		+ serverIP + ":11822;"
+		+ serverIP + ":11922")
+		.marshaller(new ProtoStreamMarshaller());
 		
 		///API entry point, by default it connects to localhost:11222
 		RemoteCacheManager rcm = new RemoteCacheManager(cb.build());
@@ -55,9 +64,9 @@ public class ServerCustomDataInitializer {
         if(cache.isEmpty()) {
             dataAPI dataApi = new dataAPI();
             
-            for (int i = 0; i < GeneralArguments.cacheSize; i++) {
+            for (int i = 0; i < CACHE_SIZE; i++) {
             	cache.put(i, dataApi.getEmployee(i));
-    		}	
+            }
             
             System.out.println(cache.get(3));
             System.out.println("Initialization done!");
