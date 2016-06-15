@@ -44,11 +44,7 @@ public class InfinispanGetDriverBenchmark extends BenchmarkDriverAdapter{
 		cb.addServers(serverIP + ":11222;" 
 		+ serverIP + ":11322;" 
 		+ serverIP + ":11422;" 
-		+ serverIP + ":11522;"
-		+ serverIP + ":11622;"
-		+ serverIP + ":11722;"
-		+ serverIP + ":11822;"
-		+ serverIP + ":11922");
+		+ serverIP + ":11522");
 		
 		rcm = new RemoteCacheManager(cb.build());
 		remoteMap = rcm.getCache();

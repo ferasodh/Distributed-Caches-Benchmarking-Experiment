@@ -61,11 +61,7 @@ public class InfinispanCustomComplexQuery2DriverBenchmark extends BenchmarkDrive
 		cb.addServers(serverIP + ":11222;" 
 		+ serverIP + ":11322;" 
 		+ serverIP + ":11422;" 
-		+ serverIP + ":11522;"
-		+ serverIP + ":11622;"
-		+ serverIP + ":11722;"
-		+ serverIP + ":11822;"
-		+ serverIP + ":11922")
+		+ serverIP + ":11522")
 		.marshaller(new ProtoStreamMarshaller());
 		
 		///API entry point, by default it connects to localhost:11222

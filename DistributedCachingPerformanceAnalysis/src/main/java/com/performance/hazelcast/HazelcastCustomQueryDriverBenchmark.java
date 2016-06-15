@@ -48,11 +48,7 @@ public class HazelcastCustomQueryDriverBenchmark extends BenchmarkDriverAdapter 
 		clientConfig.getNetworkConfig().addAddress(serverIP + ":5701",
 				serverIP + ":5702",
 				serverIP + ":5703",
-				serverIP + ":5704",
-				serverIP + ":5705",
-				serverIP + ":5706",
-				serverIP + ":5707",
-				serverIP + ":5708");
+				serverIP + ":5704");
 		
 		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
 		remoteMap = hzClient.getMap("employees");
