@@ -32,6 +32,7 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 	private IMap<Integer, Employee> remoteMap;
 	
 	private static String serverIP = GeneralArguments.serverIP;
+	private static int mapSize;
 	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
@@ -52,6 +53,8 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 		hzClient = HazelcastClient.newHazelcastClient(clientConfig);
 		remoteMap = hzClient.getMap("employees");
 		
+		mapSize = remoteMap.size();
+		
 		println("I finished the setup!");
 	}
 	
@@ -71,7 +74,7 @@ public class HazelcastGetDriverBenchmark extends BenchmarkDriverAdapter {
 		println("Args:" + args.toString());
 		
     	Random random = new Random();
-		int x = random.nextInt(remoteMap.size());
+		int x = random.nextInt(mapSize);
 		
 		Employee emp = remoteMap.get(x);
 		

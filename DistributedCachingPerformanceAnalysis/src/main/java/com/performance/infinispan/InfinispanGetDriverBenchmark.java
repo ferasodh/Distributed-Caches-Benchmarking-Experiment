@@ -29,6 +29,7 @@ public class InfinispanGetDriverBenchmark extends BenchmarkDriverAdapter{
 	private RemoteCache<Integer, Employee> remoteMap;
 	
 	private static String serverIP = GeneralArguments.serverIP;
+	private static int mapSize;
 	
 	@Override
 	public void setUp(BenchmarkConfiguration cfg) throws Exception {
@@ -49,6 +50,8 @@ public class InfinispanGetDriverBenchmark extends BenchmarkDriverAdapter{
 		rcm = new RemoteCacheManager(cb.build());
 		remoteMap = rcm.getCache();
 		
+		mapSize = remoteMap.size();
+		
 		println("I finished the setup!");
 	}
 	
@@ -68,7 +71,7 @@ public class InfinispanGetDriverBenchmark extends BenchmarkDriverAdapter{
 		println("Args:" + args.toString());
 		
     	Random random = new Random();
-		int x = random.nextInt(remoteMap.size());
+		int x = random.nextInt(mapSize);
 		
 		Employee emp = remoteMap.get(x);
 		
